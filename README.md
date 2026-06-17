@@ -469,6 +469,12 @@ git clone https://github.com/adongwanai/yanqi-obsidian.git yanqi-obsidian
 
 如果你只是自用、学习或一起改进这个项目，非常欢迎；这些限制主要针对无署名抄袭和换皮商业化。
 
+## 加入社群
+
+如果你也在用 AI 做内容、做产品、做自动化工作流，欢迎扫码加入阿东的大模型实验室。这里会持续分享工程实践、技术总结、AI 副业和 YANQI 后续更新。
+
+![加入阿东的大模型实验室](community.png)
+
 ## License
 
 原始 Note to RED 部分继续遵循其 MIT 许可证；言起 YANQI 新增部分版权所有 © 2026 阿东玩AI，并遵循上面的 YANQI Source-Available License。

@@ -5850,27 +5850,52 @@ var RedView = class extends import_obsidian3.ItemView {
   _buildLineMap() {
     const map = [];
     if (!this.currentFile || !this.previewEl) return map;
-    let docH = [];
+    let headings = [], sections = [];
     try {
       const c = this.app.metadataCache.getFileCache(this.currentFile);
-      docH = (c && c.headings) || [];
+      headings = (c && c.headings) || [];
+      sections = (c && c.sections) || [];
     } catch (_) {}
-    const sections = this.previewEl.querySelectorAll(".red-content-section");
-    let ptr = 0, lastLine = 0;
-    sections.forEach((sec, i) => {
-      const h = sec.querySelector("h1,h2,h3,h4,h5,h6");
-      if (h) {
-        const txt = (h.textContent || "").trim();
-        for (let j = ptr; j < docH.length; j++) {
-          if (((docH[j].heading || "").trim()) === txt) {
-            lastLine = docH[j].position.start.line;
-            ptr = j + 1;
-            break;
-          }
+    let headingLevel = "h1";
+    try {
+      headingLevel = (this.settingsManager && this.settingsManager.getSettings().headingLevel) || "h1";
+    } catch (_) {}
+    const levelNum = headingLevel === "h2" ? 2 : headingLevel === "h3" ? 3 : headingLevel === "h4" ? 4 : headingLevel === "h5" ? 5 : headingLevel === "h6" ? 6 : 1;
+    const domCount = this.previewEl.querySelectorAll(".red-content-section").length;
+    const cards = headings.filter((h) => h.level === levelNum);
+    if (!cards.length) {
+      for (let i = 0; i < domCount; i++) map[i] = 0;
+      return map;
+    }
+    for (let c = 0; c < cards.length; c++) {
+      const cardLine = cards[c].position.start.line;
+      const endLine = c + 1 < cards.length ? cards[c + 1].position.start.line : Infinity;
+      const blocks = sections.filter((s) => s.position.start.line > cardLine && s.position.start.line < endLine);
+      const pages = [[]];
+      let cur = 0, hasHR = false;
+      blocks.forEach((b) => {
+        if (b.type === "thematicBreak") {
+          hasHR = true;
+          cur++;
+          pages[cur] = [];
+        } else {
+          if (!pages[cur]) pages[cur] = [];
+          pages[cur].push(b);
+        }
+      });
+      if (pages.length === 1 && !hasHR) {
+        map.push(cardLine);
+      } else {
+        let firstRendered = true;
+        for (let p = 0; p < pages.length; p++) {
+          if (!pages[p] || pages[p].length === 0) continue;
+          map.push(firstRendered ? cardLine : pages[p][0].position.start.line);
+          firstRendered = false;
         }
       }
-      map[i] = lastLine;
-    });
+    }
+    if (map.length > domCount) map.length = domCount;
+    while (map.length < domCount) map.push(map.length ? map[map.length - 1] : 0);
     return map;
   }
   _getFileEditorLeaf() {

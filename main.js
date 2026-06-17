@@ -4755,11 +4755,8 @@ var DownloadManager = class {
   }
 };
 
-// src/assets/donateQR.ts
-var DONATE_QR_BASE64 = "";
-
-// src/assets/mpQR.ts
-var MP_QR_BASE64 = "";
+// src/assets/adongProfile.ts
+var ADONG_PROFILE_IMAGE = "adong-profile.png";
 
 // src/donateManager.ts
 var DonateManager = class {
@@ -4767,7 +4764,18 @@ var DonateManager = class {
     this.app = app;
     this.plugin = plugin;
   }
+  static getProfileImageSrc() {
+    try {
+      const pluginDir = this.plugin && this.plugin.manifest && this.plugin.manifest.dir ? this.plugin.manifest.dir : ".obsidian/plugins/yanqi-obsidian";
+      return this.app.vault.adapter.getResourcePath(`${pluginDir}/${ADONG_PROFILE_IMAGE}`);
+    } catch (e) {
+      return "";
+    }
+  }
   static showDonateModal(container) {
+    if (this.overlay) {
+      this.closeDonateModal();
+    }
     this.overlay = container.createEl("div", {
       cls: "mp-donate-overlay"
     });
@@ -4782,98 +4790,70 @@ var DonateManager = class {
       cls: "mp-about-section mp-about-intro-section"
     });
     authorSection.createEl("h4", {
-      text: "\u5173\u4E8E\u4F5C\u8005",
+      text: "关于阿东",
       cls: "mp-about-title"
     });
     const introEl = authorSection.createEl("p", {
       cls: "mp-about-intro"
     });
-    introEl.appendText("\u4F60\u597D\uFF0C\u6211\u662F");
+    introEl.appendText("你好，我是");
     introEl.createEl("span", {
       cls: "mp-about-name",
-      text: "\u3010阿东\u3011"
+      text: "阿东玩AI"
     });
-    introEl.appendText("\uFF0C\u4E00\u540D");
+    introEl.appendText("，大模型算法工程师、OPC 创业者。");
     introEl.createEl("span", {
       cls: "mp-about-identity",
-      text: "AI 创作者与独立开发者"
+      text: "小红书号：854178858"
     });
-    introEl.appendText("\u3002");
     const roleList = authorSection.createEl("div", {
       cls: "mp-about-roles"
     });
-    const roleEl = roleList.createEl("p", {
-      cls: "mp-about-role"
+    ["大厂面试官", "大模型算法 er", "中科院自研硕", "企业 Agent 落地陪跑"].forEach((role) => {
+      roleList.createEl("span", {
+        cls: "mp-about-role-chip",
+        text: role
+      });
     });
-    roleEl.appendText("\u8FD9\u6B3E\u63D2\u4EF6\u662F\u6211\u4E3A\u4E86\u5728 Obsidian \u5199\u4F5C\u540E\uFF0C");
-    roleEl.createEl("br");
-    roleEl.appendText("\u65E0\u9700\u7E41\u7410\u6392\u7248\u4E00\u952E\u5373\u53EF\u53D1\u5E03\u5230\u5C0F\u7EA2\u4E66\u800C\u5F00\u53D1\u7684\u5DE5\u5177\uFF0C");
-    roleEl.createEl("br");
-    roleEl.appendText("\u5E0C\u671B\u80FD\u8BA9\u4F60\u7684");
-    roleEl.createEl("span", {
-      cls: "mp-about-highlight",
-      text: "\u6392\u7248\u66F4\u8F7B\u677E"
-    });
-    roleEl.appendText("\uFF0C\u8BA9\u4F60\u7684");
-    roleEl.createEl("span", {
-      cls: "mp-about-value",
-      text: "\u521B\u4F5C\u66F4\u9AD8\u6548"
-    });
-    roleEl.appendText("\u3002");
     const descEl = authorSection.createEl("p", {
       cls: "mp-about-desc"
     });
-    descEl.appendText("\u5982\u679C\u8FD9\u6B3E\u63D2\u4EF6\u5BF9\u4F60\u6709\u5E2E\u52A9\uFF0C");
-    descEl.createEl("br");
-    descEl.appendText("\u6216\u8005\u4F60\u613F\u610F\u652F\u6301\u6211\u7684\u72EC\u7ACB\u5F00\u53D1\u4E0E\u5199\u4F5C\uFF0C\u6B22\u8FCE\u8BF7\u6211\u559D\u5496\u5561\u2615\uFE0F\u3002");
-    descEl.createEl("br");
-    descEl.appendText("\u4F60\u7684\u652F\u6301\u5BF9\u6211\u6765\u8BF4\u610F\u4E49\u91CD\u5927\uFF0C\u5B83\u80FD\u8BA9\u6211\u66F4\u4E13\u6CE8\u5730\u5F00\u53D1\u3001\u5199\u4F5C\u3002");
-    const donateSection = this.modal.createEl("div", {
-      cls: "mp-about-section mp-about-donate-section"
+    descEl.appendText("我会持续分享工程实践、技术总结、AI 副业和企业 Agent 落地经验。YANQI 也是这个实验室的一部分，希望它能让你的内容更容易被看见。");
+    const profileSection = this.modal.createEl("div", {
+      cls: "mp-about-section mp-about-profile-section"
     });
-    donateSection.createEl("h4", {
-      text: "\u8BF7\u6211\u559D\u5496\u5561",
+    profileSection.createEl("h4", {
+      text: "扫码找到我",
       cls: "mp-about-subtitle"
     });
-    const donateQR = donateSection.createEl("div", {
-      cls: "mp-about-qr"
-    });
-    donateQR.createEl("img", {
-      attr: {
-        src: DONATE_QR_BASE64,
-        alt: "\u6253\u8D4F\u4E8C\u7EF4\u7801"
-      }
-    });
-    const mpSection = this.modal.createEl("div", {
-      cls: "mp-about-section mp-about-mp-section"
-    });
-    const mpDescEl = mpSection.createEl("p", {
+    const profileDescEl = profileSection.createEl("p", {
       cls: "mp-about-desc"
     });
-    mpDescEl.appendText("\u5982\u679C\u4F60\u60F3\u4E86\u89E3\u66F4\u591A\u5173\u4E8E\u521B\u4F5C\u3001\u6548\u7387\u5DE5\u5177\u7684\u5C0F\u6280\u5DE7\uFF0C");
-    mpDescEl.createEl("br");
-    mpDescEl.appendText("\u6216\u8005\u5173\u6CE8\u6211\u672A\u6765\u7684\u5199\u4F5C\u52A8\u6001\uFF0C\u6B22\u8FCE\u5173\u6CE8\u6211\u7684\u5FAE\u4FE1\u516C\u4F17\u53F7\u3002");
-    mpSection.createEl("h4", {
-      text: "\u5FAE\u4FE1\u516C\u4F17\u53F7",
-      cls: "mp-about-subtitle"
+    profileDescEl.appendText("长按或截图扫码，在小红书找到我。也欢迎关注公众号：阿东玩AI。");
+    const profileImageSrc = this.getProfileImageSrc();
+    const profileCard = profileSection.createEl("div", {
+      cls: "mp-about-profile-card"
     });
-    const mpQR = mpSection.createEl("div", {
-      cls: "mp-about-qr"
-    });
-    mpQR.createEl("img", {
-      attr: {
-        src: MP_QR_BASE64,
-        alt: "\u516C\u4F17\u53F7\u4E8C\u7EF4\u7801"
-      }
-    });
-    const footerEl = mpSection.createEl("p", {
+    if (profileImageSrc) {
+      profileCard.createEl("img", {
+        attr: {
+          src: profileImageSrc,
+          alt: "阿东玩AI 小红书二维码"
+        }
+      });
+    } else {
+      profileCard.createEl("p", {
+        cls: "mp-about-desc",
+        text: "二维码图片暂时加载失败，可以在小红书搜索：阿东玩AI。"
+      });
+    }
+    const footerEl = profileSection.createEl("p", {
       cls: "mp-about-footer"
     });
-    footerEl.appendText("\u671F\u5F85\u4E0E\u4F60\u4E00\u8D77\uFF0C\u5728\u521B\u4F5C\u7684\u4E16\u754C\u91CC");
+    footerEl.appendText("一起把 Obsidian 里的思考，变成能传播的内容。");
     footerEl.createEl("strong", {
-      text: "\u627E\u5230\u5C5E\u4E8E\u81EA\u5DF1\u7684\u610F\u4E49"
+      text: "欢迎来聊 AI、内容和 Agent 落地。"
     });
-    footerEl.appendText("\u3002");
     closeButton.addEventListener("click", () => this.closeDonateModal());
     this.overlay.addEventListener("click", (e) => {
       if (e.target === this.overlay) {
@@ -5714,7 +5694,7 @@ var RedView = class extends import_obsidian3.ItemView {
     // 添加捐赠提醒相关属性
     this.donateCount = 0;
     this.lastDonatePrompt = 0;
-    this.MAX_COUNT_BEFORE_PROMPT = 5;
+    this.MAX_COUNT_BEFORE_PROMPT = 6;
     this.themeManager = themeManager;
     this.settingsManager = settingsManager;
     this.backgroundManager = new BackgroundManager();
@@ -6149,10 +6129,10 @@ var RedView = class extends import_obsidian3.ItemView {
   initializeDonateButton(parent) {
     const likeButton = parent.createEl("button", { cls: "red-like-button" });
     likeButton.createEl("span", {
-      text: "\u2764\uFE0F",
+      text: "\u2728",
       attr: { style: "margin-right: 4px" }
     });
-    likeButton.createSpan({ text: "\u5173\u4E8E\u4F5C\u8005" });
+    likeButton.createSpan({ text: "\u5173\u4E8E阿东" });
     likeButton.addEventListener("click", () => {
       DonateManager.showDonateModal(this.containerEl);
     });
@@ -6590,7 +6570,6 @@ var RedView = class extends import_obsidian3.ItemView {
   // #endregion
   // 检查是否需要显示捐赠弹窗
   shouldShowDonatePrompt() {
-    return false;
     this.donateCount++;
     if (this.settingsManager) {
       const settings = this.settingsManager.getSettings();
@@ -6598,8 +6577,8 @@ var RedView = class extends import_obsidian3.ItemView {
       this.settingsManager.updateSettings(settings);
     }
     const now = Date.now();
-    const oneDayInMs = 24 * 60 * 60 * 1e3;
-    if (this.donateCount % this.MAX_COUNT_BEFORE_PROMPT === 0 && now - this.lastDonatePrompt > oneDayInMs) {
+    const threeDaysInMs = 3 * 24 * 60 * 60 * 1e3;
+    if (this.donateCount % this.MAX_COUNT_BEFORE_PROMPT === 0 && now - this.lastDonatePrompt > threeDaysInMs) {
       this.lastDonatePrompt = now;
       if (this.settingsManager) {
         const settings = this.settingsManager.getSettings();

@@ -1,18 +1,60 @@
-## 言起 YANQI — 把你的思考，变成影响力
+# 言起 YANQI for Obsidian：把 Markdown 笔记一键导出成小红书图文卡片
+
+[![GitHub stars](https://img.shields.io/github/stars/adongwanai/yanqi-obsidian?style=social)](https://github.com/adongwanai/yanqi-obsidian/stargazers)
+![Obsidian Plugin](https://img.shields.io/badge/Obsidian-plugin-7C3AED)
+![Markdown to Image](https://img.shields.io/badge/Markdown-to%20Image-111827)
+![RedNote](https://img.shields.io/badge/RedNote-Xiaohongshu-FF2442)
 
 > **好内容，不该埋在笔记里。**
+>
+> YANQI 是一个面向内容创作者的 Obsidian 图文导出插件，把 Markdown 笔记一键渲染成适合小红书 / RedNote、公众号、即刻、微博传播的视觉卡片。
 
 ![言起 YANQI 演示](image.png)
 
-一键将 Obsidian 笔记渲染为高质感品牌内容图的高级输出引擎。**The Engine of Influence.**
+一键将 Obsidian 笔记渲染为高质感品牌内容图的高级输出引擎。支持 Markdown to image、小红书图文卡片、公众号文章卡片、信息流长图、批量导出和 AI Agent 安装工作流。
 
 如果它能帮你少折腾一次排版，欢迎顺手点一下右上角 **Star**。Star 越多，我会优先补更多主题、骨架模板和 Agent 安装教程。
 
 ## 这是什么
 
-言起（YANQI）不是普通的导出插件，而是你的「视觉终端」：把长博客、灵感速记、深度分析，一键渲染成适合小红书 / 公众号 / 即刻 / 微博传播的惊艳卡片。骨架、主题、封面、每张配图的裁剪——全部可调，所见即所得。
+言起（YANQI）不是普通的截图工具，而是 Obsidian 里的「内容视觉终端」。
 
-### 核心特性
+你只管用 Markdown 写内容，它负责把长博客、灵感速记、技术分析、AI Agent 工作流笔记，变成适合社媒传播的图文卡片。骨架、主题、封面、图片裁剪和导出节奏都能调，所见即所得。
+
+如果你用过 note-to-red，YANQI 可以理解成它的增强版：更偏内容创作者工作流，更重视封面、主题、批量导出和 AI Agent 配合。
+
+## 适合谁
+
+- **小红书 / RedNote 创作者**：把 Obsidian 笔记快速变成 3-12 张图文卡片。
+- **公众号作者**：把文章观点拆成适合朋友圈、社群转发的摘要卡片。
+- **AI / 技术博主**：把代码、提示词、Agent 工作流、技术趋势整理成清晰的信息流图文。
+- **知识管理用户**：让 Obsidian 不只负责记录，也负责把内容发布出去。
+- **Claude Code / Codex 用户**：让 Agent 直接帮你安装插件、生成图文内容、导出发布素材。
+
+## 可以做什么
+
+| 场景 | 输出 |
+| --- | --- |
+| Markdown 笔记转图片 | 把一篇 Obsidian 笔记切成多张图文卡片 |
+| 小红书图文发布 | 生成封面 + 多页内容图，适合直接发布 |
+| 公众号 / 即刻 / 微博分发 | 把长文观点拆成可转发的社媒卡片 |
+| AI Agent 内容工作流 | 配合 YANQI-note skills，从写内容到出图一条龙完成 |
+| 多页批量导出 | 下载当前页或一键导出全部页面 |
+
+## 一句话转发介绍
+
+YANQI 是一个 Obsidian 图文导出插件：你只管写 Markdown，它负责把笔记变成小红书 / RedNote、公众号、即刻、微博都能用的视觉卡片，支持封面风格、主题模板、图片裁剪和批量导出。
+
+## 快速导航
+
+- [快速安装：让 Claude / Codex 帮你装 Obsidian 插件](#快速安装让-claude--codex-帮你装-obsidian-插件)
+- [骨架模板（12 套）](#骨架模板12-套)
+- [主题画廊（30 套）](#主题画廊30-套)
+- [封面风格（5 种）](#封面风格5-种)
+- [编辑体验](#编辑体验)
+- [FAQ](#faq)
+
+## 核心特性
 
 - **12 套骨架模板** — 小红书、微博、公众号、报纸、语录、终端、GitHub 卡……一键换壳。
 - **30 套主题 + 14 款字体** — 配色、字体、间距全部预设好，并带完整主题编辑器（可取色、可保存）。
@@ -60,7 +102,7 @@
 
 
 
-## 安装
+## 快速安装：让 Claude / Codex 帮你装 Obsidian 插件
 
 ### 方式一：让 Claude / Codex 帮你安装（推荐）
 
@@ -375,6 +417,43 @@ git clone https://github.com/adongwanai/yanqi-obsidian.git yanqi-obsidian
 
 - **歸藏（@op7418）｜杂志风网页 PPT Skill** — <https://github.com/op7418/guizang-ppt-skill>
 - **张 Zara（@zarazhangrui）｜前端 Slides Skill** — <https://github.com/zarazhangrui/frontend-slides>
+
+## FAQ
+
+### YANQI 可以把 Obsidian 笔记导出成小红书图片吗？
+
+可以。YANQI 会按标题或分隔线把 Markdown 笔记切成多张图文卡片，适合生成小红书 / RedNote 的封面图和内容页。
+
+
+### 支持批量导出多张图吗？
+
+支持。你可以下载当前页，也可以一键导出全部页面，适合一次性生成完整的小红书图文组图。
+
+### 图片太大、太小或裁剪不好怎么办？
+
+每张图片都可以单独拖动、缩放和四角改大小。YANQI 会按图片记住调整结果，重开后仍能保留排版。
+
+### 可以让 Claude Code / Codex 自动安装吗？
+
+可以。README 上方提供了可直接复制给 Claude Code、Codex 或其他本地 Agent 的安装提示词，让 Agent 帮你确认 Vault、安装到 `.obsidian/plugins/`，并引导启用插件。
+
+### 只适合小红书吗？
+
+不只。小红书 / RedNote 是核心场景，但 YANQI 也适合公众号摘要卡、即刻长文卡、微博图文、朋友圈转发图和技术博客视觉摘要。
+
+### 适合技术内容和 AI Agent 内容吗？
+
+适合。YANQI 提供终端窗口、GitHub 卡、科技类主题和等宽代码字体，适合展示代码片段、提示词、Agent 工作流、AI 工具教程和技术趋势分析。
+
+## Roadmap
+
+- 发布更多真实主题截图，补齐当前「待补充」主题展示。
+- 增加更多小红书封面模板，尤其是大字报、对比型、清单型和技术趋势型封面。
+- 完善 YANQI-note skills 联动教程，让 Agent 同时生成正文、图文卡片内容和导出指令。
+- 补充视频教程和从 Obsidian 到小红书发布的完整案例。
+- 适配更多社媒平台比例和导出尺寸。
+
+喜欢这个方向的话，欢迎点个 **Star**，也可以通过 Issue 告诉我你最想要的主题、骨架或导出场景。
 
 
 ## 开源与署名

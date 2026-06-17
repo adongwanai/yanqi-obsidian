@@ -2,7 +2,7 @@
 
 > **好内容，不该埋在笔记里。**
 
-![[yanqi-obsidian/image.png]]
+![言起 YANQI 演示](image.png)
 
 一键将 Obsidian 笔记渲染为高质感品牌内容图的高级输出引擎。**The Engine of Influence.**
 

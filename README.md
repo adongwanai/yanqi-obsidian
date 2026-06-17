@@ -6,6 +6,8 @@
 
 一键将 Obsidian 笔记渲染为高质感品牌内容图的高级输出引擎。**The Engine of Influence.**
 
+如果它能帮你少折腾一次排版，欢迎顺手点一下右上角 **Star**。Star 越多，我会优先补更多主题、骨架模板和 Agent 安装教程。
+
 ## 这是什么
 
 言起（YANQI）不是普通的导出插件，而是你的「视觉终端」：把长博客、灵感速记、深度分析，一键渲染成适合小红书 / 公众号 / 即刻 / 微博传播的惊艳卡片。骨架、主题、封面、每张配图的裁剪——全部可调，所见即所得。
@@ -100,6 +102,8 @@ git clone https://github.com/adongwanai/yanqi-obsidian.git yanqi-obsidian
 重启 Obsidian 后启用插件即可。
 
 `data.json` 是本地配置文件，不建议随 release 强制分发；首次启用后，Obsidian 会按你的设置自动生成。
+
+安装成功后，也欢迎回到 GitHub 给项目点个 **Star**，我会根据 Star 和 Issue 反馈继续补主题、封面风格和使用教程。
 
 ## 使用
 

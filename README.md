@@ -60,26 +60,38 @@
 
 ## 安装
 
-### 方式一：直接安装到插件目录（推荐）
+### 方式一：让 Claude / Codex 帮你安装（推荐）
 
-把这个仓库克隆到你的 Obsidian 仓库插件目录：
+把下面这段话复制给 Claude Code、Codex 或其他能操作本地文件的 Agent，让它全程帮你安装：
 
-```bash
-cd "{vault}/.obsidian/plugins"
-git clone https://github.com/adongwanai/yanqi-obsidian.git
+```text
+请帮我把 GitHub 仓库 https://github.com/adongwanai/yanqi-obsidian 安装到我当前 Obsidian 仓库的插件目录里，并在 Obsidian 中启用它。
+
+请你自动完成这些步骤：
+1. 确认我当前使用的 Obsidian Vault 路径；如果有多个 Vault，先问我选哪一个。
+2. 进入这个 Vault 的 `.obsidian/plugins/` 目录。
+3. 克隆仓库到 `.obsidian/plugins/yanqi-obsidian/`。
+4. 检查插件目录里是否存在 `manifest.json`、`main.js` 和 `styles.css`。
+5. 帮我重启 Obsidian，或提示我完全退出后重新打开。
+6. 引导我到 Obsidian 设置 → 第三方插件里启用「言起 YANQI」。
 ```
 
-确认目录结构是：
+Agent 完成后，插件目录应该是：
 
 ```text
 {vault}/.obsidian/plugins/yanqi-obsidian/
 ```
 
-然后完全退出并重启 Obsidian，打开 Obsidian 设置 → 第三方插件 → 启用 **言起 YANQI**。
+### 方式二：手动安装
 
-### 方式二：下载 ZIP
+如果不想让 Agent 操作，也可以手动把仓库放进 Obsidian 插件目录：
 
-如果不想用 git，也可以在 GitHub 页面点击 **Code → Download ZIP**，解压后把整个 `yanqi-obsidian` 文件夹放到：
+```bash
+cd "{vault}/.obsidian/plugins"
+git clone https://github.com/adongwanai/yanqi-obsidian.git yanqi-obsidian
+```
+
+或者在 GitHub 页面点击 **Code → Download ZIP**，解压后把整个 `yanqi-obsidian` 文件夹放到：
 
 ```text
 {vault}/.obsidian/plugins/yanqi-obsidian/

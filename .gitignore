@@ -1,0 +1,6 @@
+.DS_Store
+.obsidian/
+data.json
+node_modules/
+dist/
+*.log

@@ -60,35 +60,32 @@
 
 ## 安装
 
-### 方式一：Release 安装（推荐）
+### 方式一：直接安装到插件目录（推荐）
 
-1. 在 GitHub Releases 下载最新版本压缩包。
-2. 解压后，将整个文件夹放入你的 Obsidian 仓库插件目录：
+把这个仓库克隆到你的 Obsidian 仓库插件目录：
+
+```bash
+cd "{vault}/.obsidian/plugins"
+git clone https://github.com/adongwanai/yanqi-obsidian.git
+```
+
+确认目录结构是：
 
 ```text
 {vault}/.obsidian/plugins/yanqi-obsidian/
 ```
 
-3. 确认目录中至少包含以下 3 个文件：
+然后完全退出并重启 Obsidian，打开 Obsidian 设置 → 第三方插件 → 启用 **言起 YANQI**。
 
-```text
-main.js
-manifest.json
-styles.css
-```
+### 方式二：下载 ZIP
 
-4. 完全退出并重启 Obsidian。
-5. 打开 Obsidian 设置 → 第三方插件 → 启用 **言起 YANQI**。
-
-### 方式二：手动复制
-
-如果你是直接从仓库拿文件，也可以手动创建插件目录：
+如果不想用 git，也可以在 GitHub 页面点击 **Code → Download ZIP**，解压后把整个 `yanqi-obsidian` 文件夹放到：
 
 ```text
 {vault}/.obsidian/plugins/yanqi-obsidian/
 ```
 
-然后复制 `main.js`、`manifest.json`、`styles.css` 到该目录，重启 Obsidian 后启用插件。
+重启 Obsidian 后启用插件即可。
 
 `data.json` 是本地配置文件，不建议随 release 强制分发；首次启用后，Obsidian 会按你的设置自动生成。
 

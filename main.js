@@ -6197,6 +6197,69 @@ var RedView = class extends import_obsidian3.ItemView {
     });
     modal.open();
   }
+  _tableKey(table) {
+    const s = (table.textContent || "").replace(/\s+/g, " ").trim().slice(0, 200);
+    let h = 0;
+    for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; }
+    return "t" + (h >>> 0);
+  }
+  setupTableResize() {
+    try {
+      const settings = this.settingsManager.getSettings();
+      const store = settings.tableScales || {};
+      let base = 16;
+      try { base = (this.themeManager && this.themeManager.currentFontSize) || settings.fontSize || 16; } catch (_) { base = settings.fontSize || 16; }
+      let saveTimer = null;
+      const persist = () => {
+        if (saveTimer) clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => { this.settingsManager.updateSettings({ tableScales: store }); }, 400);
+      };
+      const tables = this.previewEl.querySelectorAll(".red-content-section table");
+      tables.forEach((table) => {
+        try {
+          if (table.dataset.redTableInit === "1") return;
+          const parent = table.parentElement;
+          if (!parent) return;
+          const key = this._tableKey(table);
+          const raw = store[key];
+          const st = { s: (raw && typeof raw.s === "number") ? raw.s : 1 };
+          store[key] = st;
+          const wrap = document.createElement("div");
+          wrap.className = "red-table-wrap";
+          parent.insertBefore(wrap, table);
+          wrap.appendChild(table);
+          table.dataset.redTableInit = "1";
+          const applyS = () => {
+            const fs = (base * st.s).toFixed(2);
+            wrap.querySelectorAll("th, td").forEach((c) => { c.style.fontSize = fs + "px"; });
+          };
+          applyS();
+          const ctrl = document.createElement("div");
+          ctrl.className = "red-table-ctrl";
+          const mk = (t, fn) => {
+            const b = document.createElement("button");
+            b.className = "red-table-btn"; b.type = "button"; b.textContent = t;
+            b.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); fn(); applyS(); persist(); });
+            ctrl.appendChild(b);
+          };
+          mk("−", () => { st.s = Math.max(0.5, +(st.s - 0.05).toFixed(2)); });
+          mk("+", () => { st.s = Math.min(1.6, +(st.s + 0.05).toFixed(2)); });
+          mk("↺", () => { st.s = 1; });
+          wrap.appendChild(ctrl);
+          const hd = document.createElement("div");
+          hd.className = "red-table-resize";
+          hd.setAttribute("title", "拖拽缩放表格");
+          wrap.appendChild(hd);
+          let rz = false, start = 0, s0 = 1;
+          hd.addEventListener("pointerdown", (e) => { rz = true; start = e.clientX + e.clientY; s0 = st.s; try { hd.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); e.stopPropagation(); });
+          hd.addEventListener("pointermove", (e) => { if (!rz) return; const d = (e.clientX + e.clientY - start); st.s = Math.max(0.5, Math.min(1.6, +(s0 + d / 300).toFixed(2))); applyS(); });
+          const end = (e) => { if (rz) { rz = false; persist(); try { hd.releasePointerCapture(e.pointerId); } catch (_) {} } };
+          hd.addEventListener("pointerup", end);
+          hd.addEventListener("pointercancel", end);
+        } catch (e) {}
+      });
+    } catch (e) {}
+  }
   _imgKey(src) {
     let h = 0; const s = src || "";
     for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; }
@@ -6477,6 +6540,7 @@ var RedView = class extends import_obsidian3.ItemView {
     if (hasValidContent) {
       this.imgTemplateManager.applyTemplate(this.previewEl, this.settingsManager.getSettings());
       try { this.setupImageZoom(); } catch (e) {}
+      try { this.setupTableResize(); } catch (e) {}
       const settings = this.settingsManager.getSettings();
       if (settings.backgroundSettings.imageUrl) {
         const previewContainer = this.previewEl.querySelector(".red-image-preview");
@@ -6844,6 +6908,9 @@ var ThemeManager = class {
     element.querySelectorAll("hr").forEach((el) => {
       el.setAttribute("style", styles.hr);
     });
+    element.querySelectorAll(".red-content-section.red-cover").forEach((sec) => {
+      sec.style.fontSize = this.currentFontSize + "px";
+    });
     element.querySelectorAll(".footnote-ref").forEach((el) => {
       el.setAttribute("style", styles.footnote.ref);
     });
@@ -6879,6 +6946,7 @@ var DEFAULT_SETTINGS = {
   backgroundId: "",
   coverStyle: "cover-classic",
   imageScales: {},
+  tableScales: {},
   themes: [],
   customThemes: [],
   // 修改默认用户信息
